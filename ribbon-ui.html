@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en-us">
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <title>Ribbon JS by wemakesites.net | ribbonjs.com</title>
+
+        <!--  The main stylesheet of the control is in AcidJs.Ribbon/styles/Ribbon.css -->
+        <link rel="stylesheet" href="./css/AcidJs.Ribbon.CustomStylesTool.css" />
+        <link rel="stylesheet" href="./css/AcidJs.Ribbon.MyCustomDropdown.css" />
+        <!-- \The main stylesheet of the control is in AcidJs.Ribbon/styles/Ribbon.css -->
+
+        <!-- Style Sheet for this page -->
+        <style> strong { color: #b00; } </style>
+
+    </head>
+
+    <body>
+
+        <div id="ribbon-ui"><!-- / --></div>
+
+        <script type="html/x-acidjs-ribbon-template" id="styles_custom_tool_template">
+            <div class="my-custom-styles-tool" data-tool-name="my-custom-styles">
+                <ul class="acidjs-ui-ribbon-tool-exclusive-buttons">
+                    <# for(var i = 0; i < styles.length; i ++) { #>
+                        <# var style = styles[i];  #>
+                        <# var selected = "acidjs-ui-tool-active";  #>
+                        <li>
+                            <a class="<#= i === 0 ? selected : "" #>" title="AcidJs.Ribbon supports custom tools via templating. This one is custom." class="<#= styles.cssClass #>" href="#" data-value="<#= style.value #>" name="<#= commandName #>">
+                                <strong>AaBbCc</strong>
+                                <span><#= style.name #></span>
+                            </a>
+                        </li>
+                    <# } #>
+                </ul>
+            </div>
+        </script>
+
+        <script type="html/x-acidjs-ribbon-template" id="my_custom_dropdown_template">
+            <h5><#= title #></h56>
+            <p><#= text #></p>
+            <ul class="my-custom-dropdown-tool">
+                <# for(var i = 0; i < guitars.length; i ++) { #>
+                    <li>
+                        <a href="#" data-value="<#= guitars[i] #>" name="guitar"><#= guitars[i] #></a>
+                    </li>
+                <# } #>
+            </ul>
+        </script>
+
+        <!-- register control's runtime libraries -->
+        <script src="AcidJs.Ribbon/lib/jquery-2.1.3.min.js"></script>
+        <script src="AcidJs.Ribbon/classes/Ribbon.js"></script>
+        <!-- / register control's runtime libraries -->
+
+        <!-- loads the event handlers in addition to ribbon -->
+        <script src="./js/ribbon-eventhandler.js"></script>
+        <!-- \loads the event handlers in addition to ribbon -->
+
+    </body>
+</html>
