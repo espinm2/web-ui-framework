@@ -4,19 +4,30 @@
     padding:5px;
 }
 
+
+#container-parent
+{
+    height: 400px;
+    width: 100%;
+    float:left;
+    background-color: #00FF00
+}
+
+
 #feedback 
 {
-    line-height:30px;
-    background-color: #eaedf1;
-    height:300px;
+    height: 100%;
     width:30%;
     float:right;
+    background-color: #eaedf1;
+
 }
 
 #container 
 {
+    height: 100%;
     width:70%;
-    float:left;
+    float:right;
     background-color: #eaedf1;
 }
 
@@ -26,26 +37,26 @@
     background-color:black;
     color:white;
     clear:both;
+    float: left;
+    position: relative;
+    width: 100%;
     text-align:center;
-   padding:5px;	 	 
+     	 
 }
 
 #fback1,#fback2,#fback3,#fback4,#fback5
 {
-    visibility: hidden;
+    visibility: collapse;
     width: 100%;
     height: 100%;
     position: relative;
-    top: 0;
-    left: 0;
+ 
 }
 
 #tab1, #tab2, #tab3, #tab4, #tab5 
 {
-    visibility: hidden;
+    visibility: collapse;
     width: 100%;
     height: 100%;
     position: relative;
-    top: 0;
-    left: 0;
 }
