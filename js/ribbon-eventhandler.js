@@ -1,10 +1,22 @@
+/*****************************************************
+ * 
+ * ribbon-eventhander: source for ribbion UI elements
+ * 
+ * Purpose: contains all event handlers and creation of UI ribbion related UI elements
+ * 
+ * Usage: Importing the file and making use of the event handlers provided
+ * 
+ * 
+ */
+
+
 (function() {
     
     "use strict";
     
-    window.ribbon1 = new window.AcidJs.Ribbon({
+    window.ribbon = new window.AcidJs.Ribbon({
         //appIconUrl: "my-custom-app-icon.png", // {String} [optional] top left application icon
-        //flat: true, // {Boolean} [optional] applies flat ribbon styles as in MS Office 2013 and above
+        flat: true, // {Boolean} [optional] applies flat ribbon styles as in MS Office 2013 and above
         boundingBox: $("#ribbon-ui"), // {jQueryDomObject} [required] ribbon bar placeholder element
         cssClasses: [ // {Array} [optional] additional CSS classes to be applied to the boundingBox. Default: []
             "css-class-abc",
@@ -47,7 +59,9 @@
                     label: "Print",
                     icon: "print.png"
                 }],
-            quickLaunchToolbar: [{ // {Object} [optional] quick launch toolbar commands
+            quickLaunchToolbar: [
+                
+             /* { // {Object} [optional] quick launch toolbar commands
                 name: "save", // {String} [required] command name
                 hint: "Save (Ctrl+S)", // {String} [optional] command hint
                 //label: "Save", // {String} [optional] command label
@@ -60,12 +74,12 @@
                 name: "copy",
                 hint: "Copy (Ctrl+C)",
                 icon: "copy.png"
-            }/*,{
+            },{
                 name: "paste",
                 hint: "Paste (Paste+V)",
                 icon: "paste.png"
             },{
-                name: "undo",
+                name: "undo",    // NOTE: this might be useful later on
                 hint: "Undo (Ctl+Z)",
                 icon: "undo.png",
                 label: "Undo"
@@ -80,7 +94,24 @@
                 icon: "repeat.png",
                 label: "Repeat"
             }*/],
-            tabs: [{
+            
+            
+            /**
+             * 
+             * How to create icons
+             * 1) Create a tab object
+             * 2) In that tab object, create a "ribbon" aka a group of icons grouped together
+             * 3) Create the icon under the tools under that "ribbon"
+             * 
+             * Note:  Things are in list form 
+             * Tools:[ { }, { }, { }]
+             * 
+             * 
+             * 
+             */
+            tabs: [
+                
+                {
                 label: "Home", // {String} [required] label for the tab button
                 hint: "Go home", // {String} [optional] label for the tab button
                 name: "tab-home", // {String} [optional] id of the tab. if not set, a GUID will be used
@@ -91,12 +122,19 @@
                     tabAnything: {},
                     someArray: [1, 2, 3, 4]
                 },
+                
+                
+                
+                // What does this line of code do? What is ng? ////////////////////////////////////////////////////////////////////
                 ng: { // {Object} support for AngularJs directives
                     if: "lang == 'JavaScript' || key == 'HTML5'",
                     show: "",
                     model: "user.name",
                     "model-options": window.JSON.stringify({"1": "2", "a": [1, 2, 3, 4]}).replace(/"/g, "'")
                 },
+                // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                
+               
                 ribbons: [{
                     label: "Clipboard", // {String} [required]
                     width: "10%", // {Number|String} [optional] width of the ribbon in pixels, percentage, etc. default: "auto"
@@ -991,38 +1029,55 @@
         }
     });
     
-    window.ribbon1.getBoundingBox().on("acidjs-ribbon-tool-clicked", function(e, data){
+    
+    /**
+     * How to use event handlers. 
+     * 1) Create this function, which is an event handler
+     * 2) everything has an id, use a switch to notice if you got that id
+     * 3) call the apprpitate command
+     * 4) profit
+     * 
+     */
+    window.ribbon.getBoundingBox().on("acidjs-ribbon-tool-clicked", function(e, data){
+        // window.console.info("acidjs.ribbon event fired", e.type, data);
+        console.log("data");
+        console.log(data.command);
+        
+        
+        if(data.command == "format-painter"){
+            alert("Format Painter Triggered");
+        }
+        
+    });
+    
+    window.ribbon.getBoundingBox().on("acidjs-ribbon-tab-changed", function(e, data){
         window.console.info("acidjs.ribbon event fired", e.type, data);
     });
     
-    window.ribbon1.getBoundingBox().on("acidjs-ribbon-tab-changed", function(e, data){
+    window.ribbon.getBoundingBox().on("acidjs-ribbon-toggle", function(e, data){
         window.console.info("acidjs.ribbon event fired", e.type, data);
     });
     
-    window.ribbon1.getBoundingBox().on("acidjs-ribbon-toggle", function(e, data){
-        window.console.info("acidjs.ribbon event fired", e.type, data);
-    });
-    
-    window.ribbon1.getBoundingBox().on("acidjs-ribbon-ready", function(e, data){
+    window.ribbon.getBoundingBox().on("acidjs-ribbon-ready", function(e, data){
         window.console.info("acidjs.ribbon event fired", e.type, data);
         
         // set highlighted tabs group
-        //window.ribbon1._later(function() {
-            //window.ribbon1.highlightTabsGroup(["tab-insert", "tab-page-layout"], "font-tools", "Font Tools", "#f00");
-            //window.ribbon1.highlightTabsGroup(["tab-draw", "tab-something-layout"], "table-tools", "Table Tools", "#006ac1");
+        //window.ribbon._later(function() {
+            //window.ribbon.highlightTabsGroup(["tab-insert", "tab-page-layout"], "font-tools", "Font Tools", "#f00");
+            //window.ribbon.highlightTabsGroup(["tab-draw", "tab-something-layout"], "table-tools", "Table Tools", "#006ac1");
         //}, 2000);
         
         // disable the ribbon on ready
-        //window.ribbon1.disableRibbon();
+        //window.ribbon.disableRibbon();
         
         // hide the ribbon on ready
-        //window.ribbon1.hide();
+        //window.ribbon.hide();
         
         // collapse the ribbon on ready
-        //window.ribbon1.collapse();
+        //window.ribbon.collapse();
         
         // set some tools as active on ready
-        window.ribbon1.setToolsActive([
+        window.ribbon.setToolsActive([
             "bold",
             "subscript",
             "underline",
@@ -1030,7 +1085,7 @@
         ]);
         
         // set some tools as disabled by default
-        /*window.ribbon1.disableTools([
+        /*window.ribbon.disableTools([
             "paste",
             "cut",
             "change-case",
@@ -1050,6 +1105,8 @@
             "my-custom-dropdown-with-guitars"
         ]);*/
     });
-
-    window.ribbon1.init();
+    
+    
+    // This line i single creates the ribbion, super important!
+    window.ribbon.init();
 })();    
